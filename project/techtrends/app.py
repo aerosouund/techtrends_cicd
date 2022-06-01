@@ -1,4 +1,5 @@
 from mimetypes import MimeTypes
+from multiprocessing import connection
 import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash, Response
@@ -45,6 +46,11 @@ def post(post_id):
 @app.route('/healthz')
 def health_check():
     return "{'result': 'OK - Healthy'}", 200
+
+@app.route('/metrics')
+def metrics():
+    connection = get_db_connection()
+    post_count = connection.execute('SELECT COUNT * FROM posts')
 
 # Define the About Us page
 @app.route('/about')
