@@ -1,6 +1,7 @@
+from mimetypes import MimeTypes
 import sqlite3
 
-from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
+from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash, Response
 from werkzeug.exceptions import abort
 
 # Function to get a database connection.
@@ -39,6 +40,11 @@ def post(post_id):
       return render_template('404.html'), 404
     else:
       return render_template('post.html', post=post)
+
+# Health checks route
+@app.route('/healthz')
+def health_check():
+    return Response("{'result': 'OK - Healthy'}", status=200, mimetype='application/json')
 
 # Define the About Us page
 @app.route('/about')
