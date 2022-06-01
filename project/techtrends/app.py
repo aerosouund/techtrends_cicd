@@ -51,7 +51,7 @@ def health_check():
 @app.route('/metrics')
 def metrics():
     connection = get_db_connection()
-    post_count = connection.execute('SELECT COUNT * FROM posts').fetchone()
+    post_count = connection.execute('SELECT COUNT(*) FROM posts').fetchone()
     return "{'count':{}}".format(post_count), 200
 
 # Define the About Us page
