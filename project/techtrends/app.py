@@ -1,35 +1,52 @@
 from mimetypes import MimeTypes
 from multiprocessing import connection
 import sqlite3
+from connection_count import *
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash, Response
 from werkzeug.exceptions import abort
 
+
+# Global list containing all active connections
+GLOBAL_DB_CONNECTIONS = []
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
+    GLOBAL_DB_CONNECTIONS.append(connection)
     connection.row_factory = sqlite3.Row
     return connection
+
+# Wrapper above closing connection to modify the global list
+def close_connection(connection):
+    connection.close()
+    GLOBAL_DB_CONNECTIONS.remove(connection)
+    return
 
 # Function to get a post using its ID
 def get_post(post_id):
     connection = get_db_connection()
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
-    connection.close()
+    close_connection(connection)
     return post
+
+# Function to get amounts of rows in DB
+def get_post_count():
+    connection = get_db_connection()
+    count = connection.execute('SELECT COUNT(*) FROM posts').fetchone()[0]
+    close_connection(connection)
+    return count
 
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
-
 # Define the main route of the web application 
 @app.route('/')
 def index():
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
-    connection.close()
+    close_connection(connection)
     return render_template('index.html', posts=posts)
 
 # Define how each individual article is rendered 
@@ -50,9 +67,9 @@ def health_check():
 # Route for metrics
 @app.route('/metrics')
 def metrics():
-    connection = get_db_connection()
-    post_count = connection.execute('SELECT COUNT(*) FROM posts').fetchone()
-    return "{'count':{}}".format(post_count), 200
+    post_count = get_post_count()
+    json_dict = {'db_connections': len(GLOBAL_DB_CONNECTIONS),'post_count': post_count}
+    return str(json_dict), 200
 
 # Define the About Us page
 @app.route('/about')
@@ -73,7 +90,7 @@ def create():
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
             connection.commit()
-            connection.close()
+            close_connection(connection)
 
             return redirect(url_for('index'))
 
