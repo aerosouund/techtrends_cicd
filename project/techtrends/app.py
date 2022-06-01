@@ -47,10 +47,12 @@ def post(post_id):
 def health_check():
     return "{'result': 'OK - Healthy'}", 200
 
+# Route for metrics
 @app.route('/metrics')
 def metrics():
     connection = get_db_connection()
-    post_count = connection.execute('SELECT COUNT * FROM posts')
+    post_count = connection.execute('SELECT COUNT * FROM posts').fetchone()
+    return "{'count':{}}".format(post_count), 200
 
 # Define the About Us page
 @app.route('/about')
