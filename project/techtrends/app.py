@@ -44,7 +44,7 @@ def post(post_id):
 # Health checks route
 @app.route('/healthz')
 def health_check():
-    return Response("{'result': 'OK - Healthy'}", status=200, mimetype='application/json')
+    return "{'result': 'OK - Healthy'}", 200
 
 # Define the About Us page
 @app.route('/about')
