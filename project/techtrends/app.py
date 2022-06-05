@@ -1,7 +1,8 @@
 from mimetypes import MimeTypes
 from multiprocessing import connection
 import sqlite3
-from connection_count import *
+import logging
+import sys
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash, Response
 from werkzeug.exceptions import abort
@@ -9,6 +10,13 @@ from werkzeug.exceptions import abort
 
 # Global list containing all active connections
 GLOBAL_DB_CONNECTIONS = []
+
+# Configure logging
+logging.basicConfig(
+    stream=sys.stdout,
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
@@ -28,8 +36,8 @@ def get_post(post_id):
     connection = get_db_connection()
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
+    logging.info('Article {} Retrieved!'.format(post_id))
     close_connection(connection)
-    app.logging.info('Article {} Retrieved!'.format(post_id))
     return post
 
 # Function to get amounts of rows in DB
@@ -75,6 +83,7 @@ def metrics():
 # Define the About Us page
 @app.route('/about')
 def about():
+    logging.info('About page retrieved.')
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -92,6 +101,7 @@ def create():
                          (title, content))
             connection.commit()
             close_connection(connection)
+            logging.info('New article created!')
 
             return redirect(url_for('index'))
 
