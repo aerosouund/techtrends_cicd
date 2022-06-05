@@ -25,7 +25,7 @@ jobs:
       run: |
         cd 
         TAG=$(git rev-parse HEAD | head -c 5)
-        docker build -t techtrends:${TAG} .
+        docker build -t techtrends:$(echo $TAG) .
     
     
       
