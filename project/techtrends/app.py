@@ -25,26 +25,20 @@ def get_db_connection():
     connection.row_factory = sqlite3.Row
     return connection
 
-# Wrapper above closing connection to modify the global list
-def close_connection(connection):
-    connection.close()
-    GLOBAL_DB_CONNECTIONS.remove(connection)
-    return
-
 # Function to get a post using its ID
 def get_post(post_id):
     connection = get_db_connection()
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
-    logging.info('Article {} Retrieved!'.format(post_id))
-    close_connection(connection)
+    logging.info(f'Article {post_id} Retrieved!')
+    connection.close()
     return post
 
 # Function to get amounts of rows in DB
 def get_post_count():
     connection = get_db_connection()
     count = connection.execute('SELECT COUNT(*) FROM posts').fetchone()[0]
-    close_connection(connection)
+    connection.close()
     return count
 
 # Define the Flask application
@@ -55,7 +49,7 @@ app.config['SECRET_KEY'] = 'your secret key'
 def index():
     connection = get_db_connection()
     posts = connection.execute('SELECT * FROM posts').fetchall()
-    close_connection(connection)
+    connection.close()
     return render_template('index.html', posts=posts)
 
 # Define how each individual article is rendered 
@@ -100,7 +94,7 @@ def create():
             connection.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
                          (title, content))
             connection.commit()
-            close_connection(connection)
+            connection.close()
             logging.info('New article created!')
 
             return redirect(url_for('index'))
