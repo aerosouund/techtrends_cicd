@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: 
+      run: |
         TAG=$(git rev-parse HEAD | head -c 5)
         docker build . --file project/techtrends/Dockerfile --tag techtrends:$TAG
       
