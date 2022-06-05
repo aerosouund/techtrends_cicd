@@ -15,13 +15,20 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file project/techtrends/Dockerfile --tag techtrends:$(date +%s)
+      run: 
+        TAG=$(git rev-parse HEAD | head -c 5)
+        docker build . --file project/techtrends/Dockerfile --tag techtrends:$TAG
       
 
     - uses: docker/login-action@v2
+    - name: Login to dockerhub
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: push image
+      run: docker push techtrends
+
 
       
     
