@@ -27,7 +27,7 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - name: push image
-      run: docker push techtrends
+      run: docker push techtrends:latest
 
 
       
