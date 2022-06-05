@@ -7,7 +7,10 @@ COPY . /app
 WORKDIR /app
 
 
-RUN pip install -r requirements.txt
+RUN |
+    pwd
+    ls -la
+
 
 # initialize db
 RUN python init_db.py
