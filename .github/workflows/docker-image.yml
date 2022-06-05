@@ -25,7 +25,8 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - name: push image
-      run: docker push aerosouund/techtrends:latest
+      run: | 
+        docker push aerosouund/techtrends:latest
 
 
       
