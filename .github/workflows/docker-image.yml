@@ -19,6 +19,11 @@ jobs:
       with:
         username: aerosouund
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Image
+      run: |
+        TAG=$(git rev-parse HEAD | head -c 5)
+        docker build . --file project/techtrends/Dockerfile --tag techtrends:$TAG
     
     
       
