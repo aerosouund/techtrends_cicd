@@ -15,7 +15,7 @@ GLOBAL_DB_CONNECTIONS = []
 logging.basicConfig(
     stream=sys.stdout,
     format='%(asctime)s %(levelname)-8s %(message)s',
-    level=logging.INFO,
+    level=logging.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S')
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -58,6 +58,7 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      logging.error('Unable to retrieve post!')
       return render_template('404.html'), 404
     else:
       return render_template('post.html', post=post)
