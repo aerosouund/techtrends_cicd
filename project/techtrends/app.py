@@ -30,9 +30,7 @@ def get_post(post_id):
     connection = get_db_connection()
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
-    title = connection.execute('SELECT title FROM posts WHERE id = ?',
-                        (post_id,)).fetchone()
-    logging.info(f'Article {title} Retrieved!')
+    logging.info(f'Article {post[2]} Retrieved!')
     connection.close()
     return post
 
