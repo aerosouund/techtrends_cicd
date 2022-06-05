@@ -24,7 +24,7 @@ jobs:
       working-directory: project/techtrends
       run: |
         TAG=$(git rev-parse HEAD | head -c 5)
-        docker build -t techtrends .
+        docker build -t techtrends:$TAG .
     
     
       
