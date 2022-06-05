@@ -29,6 +29,7 @@ def get_post(post_id):
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
     close_connection(connection)
+    app.logging.info('Article {} Retrieved!'.format(post_id))
     return post
 
 # Function to get amounts of rows in DB
