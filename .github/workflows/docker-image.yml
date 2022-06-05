@@ -28,7 +28,7 @@ jobs:
 
     - name: push image
       run: | 
-        docker push aerosouund/techtrends:latest
+        docker push aerosouund/techtrends:$TAG
     
 
   
