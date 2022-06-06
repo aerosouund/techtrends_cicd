@@ -23,8 +23,7 @@ jobs:
     - name: Build Image
       working-directory: project/techtrends
       run: |
-        TAG=$(git rev-parse HEAD | head -c 5)
-        docker build -t techtrends:$TAG .
+        docker build -t aerosouund/techtrends:latest
 
     - name: push image
       run: | 
