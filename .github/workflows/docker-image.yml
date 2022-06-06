@@ -23,7 +23,7 @@ jobs:
     - name: Build Image
       working-directory: project/techtrends
       run: |
-        docker build -t techtrends:latest
+        docker build -t aerosouund/techtrends:latest .
 
     - name: push image
       run: | 
