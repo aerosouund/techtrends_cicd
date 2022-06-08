@@ -28,11 +28,9 @@ spec:
           - {{ .Values.containerPort }}
         resources:
           requests:
-            cpu: 250m
-            memory: 64Mi
+            {{ .Values.resources.requests | toYaml | indent 10 }}
           limits:
-            cpu: 500m
-            memory: 128Mi
+            {{ .Values.resources.limits | toYaml | indent 10 }}
         livenessProbe:
           - {{ .Values.livenessProbe | toYaml | indent 10 }}
         readinessProbe:
