@@ -34,6 +34,7 @@ def get_post(post_id):
     connection.close()
     return post
 
+
 # Function to get amounts of rows in DB
 def get_post_count():
     connection = get_db_connection()
@@ -66,7 +67,13 @@ def post(post_id):
 # Health checks route
 @app.route('/healthz')
 def health_check():
-    return "{'result': 'OK - Healthy'}", 200
+    try:
+        connection = get_db_connection()
+        connection.execute('SELECT * FROM posts ORDER BY RANDOM() LIMIT 1')
+        return "{'result': 'OK - Healthy'}", 200
+    except:
+        return "{'result': Unhealthy}", 500
+
 
 # Route for metrics
 @app.route('/metrics')
