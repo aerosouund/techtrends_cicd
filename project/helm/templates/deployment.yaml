@@ -26,4 +26,6 @@ spec:
         name: techtrends
         resources:
 {{ toYaml .Values.resources | indent 12 }}
+        livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 12 }}
 
