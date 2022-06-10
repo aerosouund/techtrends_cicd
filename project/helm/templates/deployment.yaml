@@ -26,8 +26,8 @@ spec:
         name: techtrends
         resources:
           requests:
-            {{ .Values.resources.requests }}
+            {{ .Values.resources.requests | toYaml }}
           limits:
-            {{ .Values.resources.limits }}
+            {{ .Values.resources.limits | toYaml }}
         
 
