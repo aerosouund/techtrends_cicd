@@ -31,8 +31,5 @@ spec:
             {{ .Values.resources.requests | toYaml | indent 10 }}
           limits:
             {{ .Values.resources.limits | toYaml | indent 10 }}
-        livenessProbe:
-          - {{ .Values.livenessProbe | toYaml | indent 10 }}
-        readinessProbe:
-          - {{ .Values.readinessProbe | toYaml | indent 10 }}
+        
 
