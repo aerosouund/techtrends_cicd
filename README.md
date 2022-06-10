@@ -1,6 +1,10 @@
-# nd064_C1
-### Cloud Native Fundamentals Scholarship Program Nanodegree Program
+# Techtrends
+### Cloud Native Fundamentals Scholarship Program Nanodegree Program - Project 1
 
-**Course Homepage**: https://sites.google.com/udacity.com/suse-cloud-native-foundations/home
+Packaging and deploying an a flask app using cloud native tools:  
 
-**Instructor**: https://github.com/kgamanji
+
+-Docker  
+-Kubernetes  
+-Helm  
+-ArgoCD
