@@ -25,6 +25,5 @@ spec:
         imagePullPolicy: {{ .Values.image.imagePullPolicy }}
         name: techtrends
         resources:
-          requests:
 {{ toYaml .Values.resources | indent 12 }}
 
