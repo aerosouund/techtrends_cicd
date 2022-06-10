@@ -17,15 +17,15 @@ replicaCount: 1
 containerPort: 3111
 
 livenessProbe:
-    httpGet: 
-      path: /healthz
-      port: 3111
+  httpGet: 
+    path: /healthz
+    port: 3111
 
 
 readinessProbe:
-    httpGet:
-      path: /healthz
-      port: 3111
+  httpGet:
+    path: /healthz
+    port: 3111
 
 resources:
   requests:
