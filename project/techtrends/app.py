@@ -72,7 +72,7 @@ def health_check():
         connection.execute('SELECT * FROM posts ORDER BY RANDOM() LIMIT 1')
         return "{'result': 'OK - Healthy'}", 200
     except:
-        return "{'result': Unhealthy}", 500
+        return "{'result': 'ERROR - Unhealthy'}", 500
 
 
 # Route for metrics
