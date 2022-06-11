@@ -60,7 +60,7 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      logging.error('Unable to retrieve post!')
+      stderrFile.write('Unable to retrieve post!\n')
       return render_template('404.html'), 404
     else:
       return render_template('post.html', post=post)
@@ -73,6 +73,7 @@ def health_check():
         connection.execute('SELECT * FROM posts ORDER BY RANDOM() LIMIT 1')
         return "{'result': 'OK - Healthy'}", 200
     except:
+        stderrFile.write('Endpoint unhealthy!\n')
         return "{'result': 'ERROR - Unhealthy'}", 500
 
 
