@@ -17,6 +17,7 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S')
+stderrFile = sys.stderr
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
