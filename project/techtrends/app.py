@@ -72,10 +72,10 @@ def health_check():
     try:
         connection = get_db_connection()
         connection.execute('SELECT * FROM posts ORDER BY RANDOM() LIMIT 1')
-        return "{'result': 'OK - Healthy'}", 200
+        return jsonify("{'result': 'OK - Healthy'}"), 200
     except:
         stderrFile.write(f'{datetime.now().strftime("%d-%m-%Y %H:%M:%S")} Endpoint unhealthy!\n')
-        return "{'result': 'ERROR - Unhealthy'}", 500
+        return jsonify("{'result': 'ERROR - Unhealthy'}"), 500
 
 
 # Route for metrics
