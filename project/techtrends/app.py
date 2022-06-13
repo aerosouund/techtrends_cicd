@@ -32,7 +32,6 @@ def get_post(post_id):
     connection = get_db_connection()
     post = connection.execute('SELECT * FROM posts WHERE id = ?',
                         (post_id,)).fetchone()
-    logging.info(f'Article {post[2]} Retrieved!')
     connection.close()
     return post
 
@@ -64,6 +63,7 @@ def post(post_id):
       stderrFile.write(f'{datetime.now().strftime("%d-%m-%Y %H:%M:%S")} Unable to retrieve post!\n')
       return render_template('404.html'), 404
     else:
+      logging.info(f'Article {post[2]} Retrieved!')
       return render_template('post.html', post=post)
 
 # Health checks route
